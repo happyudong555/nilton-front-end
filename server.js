@@ -2,7 +2,7 @@ const next = require('next')
 const http = require('http')
 const express = require('express')
 const dev = process.env.NODE_ENV !== 'production';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 //const app = next({ dev });
 const app = next({ dir: '.' , dev: false, staticMarkup: false, quiet: false, conf: null, chunk:null, cache: true});
 const handle = app.getRequestHandler()
