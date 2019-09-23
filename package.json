@@ -1,0 +1,23 @@
+{
+  "name": "nilton-front-end",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "antd": "^3.23.1",
+    "axios": "^0.19.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "next": "9.0.5",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-social": "^1.10.0"
+  }
+}
