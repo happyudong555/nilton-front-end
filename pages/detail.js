@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { Layout, Card, Col, Row, List, Icon } from 'antd'
+import { Card, List, Icon, Timeline, Divider } from 'antd'
 import { FacebookButton, FacebookCount } from 'react-social'
-const Navbar = dynamic(import('../components/desktop/navbar'), {ssr:false});
-const RelatedPost = dynamic(import('../components/desktop/relatedPost'), {ssr:false});
-const webURL = 'https://niltontravel.com/';
-const APIURL = 'http://localhost:80';
+const Navbar = dynamic(import('../components/desktop/navbar'), { ssr: false });
+const RelatedPost = dynamic(import('../components/desktop/relatedPost'), { ssr: false });
+const Footer = dynamic(import('../components/desktop/footer'), { ssr: false })
+const webURL = 'https://niltontravel.com';
+const api = 'http://167.71.218.37';
+const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
 const Index = ({ url: { query: { id } } }) => {
     const [loading, setLoad] = useState(false);
     const [detail, setDetail] = useState([]);
     useEffect(() => {
-        axios.get(`${APIURL}/detail/${id}`).then((res) => {
+        axios.get(`${api}/detail/${id}`).then((res) => {
             if (res.data === null) {
                 setDetail([]);
             }
@@ -31,33 +33,9 @@ const Index = ({ url: { query: { id } } }) => {
                 <div className="albumsContainer">
                     <List dataSource={albums} renderItem={albumsSet => (
                         <li key={albumsSet._id} className="albumsLayout">
-                            <img src={`${APIURL}/static/images/admin/content/${albumsSet}`} className="albumsImageSet lazyload" alt={albumsSet} />
+                            <img src={`${storageAPI}/${albumsSet}`} className="albumsImageSet lazyload" alt={albumsSet} />
                         </li>
                     )} />
-                </div>
-            )
-        }
-    }
-    const serviceProvide = (service, airlines) => {
-        if (service === undefined || airlines === undefined) {
-            return (
-                <div>
-
-                </div>
-            )
-        }
-        else {
-            return (
-                <div>
-                    <div style={{ marginTop: 12 }} className="clearfix">
-                        <span>Agent : <strong style={{ textTransform: 'capitalize' }}>nilton travel center</strong></span>
-                    </div>
-                    <div style={{ marginTop: 12 }}>
-                        <span>Services : <strong style={{ textTransform: 'capitalize' }}>{service}</strong></span>
-                    </div>
-                    <div style={{ marginTop: 12 }} className="clearfix">
-                        <span>Airline : <strong style={{ textTransform: 'capitalize' }}>{airlines}</strong></span>
-                    </div>
                 </div>
             )
         }
@@ -76,12 +54,12 @@ const Index = ({ url: { query: { id } } }) => {
             <Head>
                 <title>{webTitle}</title>
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.0.0-alpha.3/antd.min.css" />
-                <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&display=swap"/>
+                <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&display=swap" />
                 <meta property="og:url" content={URL} />
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content={webTitle} />
                 <meta property="og:description" content={description} />
-                <meta property="og:image" content={`${APIURL}/static/images/admin/content/${image}`} />
+                <meta property="og:image" content={`${storageAPI}/${image}`} />
             </Head>
             <div>
                 <div className="clearfix">
@@ -91,36 +69,46 @@ const Index = ({ url: { query: { id } } }) => {
                     !loading && Object.values(detail).map((post) => (
                         <div>
                             <div md={{ span: 12 }} className="mainContent">
-                               <Card style={{padding:0}} bordered={false}>
-                                    <img className="bg_images" src={`${APIURL}/static/images/admin/content/${post.image}`}/>
+                                <Card style={{ padding: 0 }} bordered={false}>
+                                    <img className="bg_images" src={`${storageAPI}/${post.image}`} />
                                 </Card>
                             </div>
                             <div className="contentContainer clearfix">
                                 <div>
                                     <h1>{post.title}</h1>
-                                    <h3><Icon type={'history'} /> : {post.date}</h3>
-                                    <br />
-                                    {setAlbums(post.albums)}
                                     <p>
                                         {post.content}
                                     </p>
-                                    {serviceProvide(post.service, post.airlines)}
                                 </div>
-                                <br/>
-                                <br/>
+                                <br />
+                                <br />
                                 <h2><strong>Share content</strong></h2>
                                 <div className="facebookShare" style={{ marginTop: 10 }}>
                                     <FacebookButton url={URL} appId={appId}>
-                                        <Icon type="facebook"/>
+                                        <Icon type="facebook" />
                                     </FacebookButton>
                                 </div>
-                                <br/>
-                                <br/>
-                                {<RelatedPost/>}
+                                <br />
+                                <br />
+                                {<RelatedPost />}
+                            </div>
+                            <div className="serviceInfo">
+                                <Divider orientation="left"><h2><strong>Package Info</strong></h2></Divider>
+                                <Timeline>
+                                    <Timeline.Item style={{ textTransform: 'capitalize' }}><strong>Airline :</strong> {post.airlines}</Timeline.Item>
+                                    <Timeline.Item style={{ textTransform: 'capitalize' }}><strong>Service Types :</strong> {post.service}</Timeline.Item>
+                                    <Timeline.Item style={{ textTransform: 'capitalize' }}><strong>Date : </strong> {post.date}</Timeline.Item>
+                                    <Timeline.Item style={{ textTransform: 'capitalize' }}><strong>Distribution : </strong> {post.author}</Timeline.Item>
+                                </Timeline>
+                                <br />
+                                {setAlbums(post.albums)}
                             </div>
                         </div>
                     ))
                 }
+                <div className="clearfix">
+                    <Footer />
+                </div>
             </div>
             <style>{`
                 .clearfix {
@@ -134,14 +122,13 @@ const Index = ({ url: { query: { id } } }) => {
                     display: block;
                 }
                 .contentContainer {
-                    background-color: #fff;
                     padding: 30px;
-                    width: 70%;
+                    width: 60%;
                     height: auto;
                     margin: auto;
                     margin-top: 0;
                     display: block;
-                    float: none;
+                    float: left;
                 }
                 .contentContainer h1 {
                     white-space: pre-line;
@@ -155,11 +142,12 @@ const Index = ({ url: { query: { id } } }) => {
                     text-transform: capitalize;
                 }
                 .contentContainer p {
-                    font-size: 1rem;
+                    font-size: 1.6rem;
                     line-height: 40px;
                     white-space: pre-line;
                     font-family: sukhumvit set, kanit !important;
                     font-weight: 400 !important;
+                    padding-top: 13px;
                 }
                 .contentContainer span {
                     font-size: 20px;
@@ -184,8 +172,8 @@ const Index = ({ url: { query: { id } } }) => {
                     text-decoration: none;
                 }
                 .albumsImageSet {
-                    width: 300px;
-                    height: 300px;
+                    width: 250px;
+                    height: 250px;
                     float: left;
                     object-fit: cover;
                     object-position: center top;
@@ -209,6 +197,13 @@ const Index = ({ url: { query: { id } } }) => {
                     cursor: pointer;
                     font-size: 40px;
                 }
+                .serviceInfo {
+                    padding:25px;
+                    width: 40%;
+                    height: auto;
+                    float:left;
+                    border-left: 2.2px dashed #f1f1f1;
+                }
                 @media screen and (min-width: 320px) and (max-width: 420px) {
                     .avatar {
                         display: none;
@@ -225,6 +220,7 @@ const Index = ({ url: { query: { id } } }) => {
                     }
                     .contentContainer {
                         width: 100%;
+                        padding-bottom: 0;
                     }
                     .albumsImageSet {
                         width: 155px;
@@ -236,6 +232,10 @@ const Index = ({ url: { query: { id } } }) => {
                     .contentContainer span {
                         font-size: 17px;
                         margin-bottom:14px;
+                    }
+                    .serviceInfo {
+                        width: 100%;
+                        padding-top: 0;
                     }
                 }
             `}</style>

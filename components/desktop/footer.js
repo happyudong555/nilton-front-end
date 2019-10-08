@@ -49,6 +49,11 @@ const Footer = (props) => {
                 .footerContainer .ant-card-head {
                     border-bottom: 0;
                 }
+                @media screen and (min-width:320px) and (max-width: 420px) {
+                    .footerContainer .ant-col-md-8 {
+                        padding: 16px;
+                    }
+                }
             `}
             </style>
         </React.Fragment>

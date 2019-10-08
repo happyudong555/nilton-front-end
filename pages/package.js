@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { Icon, Col, Carousel, Card } from 'antd'
 const Navbar = dynamic(import('../components/desktop/navbar'), { ssr: false });
 const Footer = dynamic(import('../components/desktop/footer'), { ssr: false });
-const webURL = 'http://localhost:80';
+const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
+const webURL = 'http://167.71.218.37';
 export default class Store extends PureComponent {
     constructor(props) {
         super(props);
@@ -64,11 +65,11 @@ export default class Store extends PureComponent {
                         <div className="containerService">
                             {
                                 findSight.map((post) => (
-                                    <Col className="toursService" md={{ span: 6 }}>
+                                    <Col key={post._id} className="toursService" md={{ span: 6 }}>
                                         <Card>
                                             <div className="cover">
                                                 <div className="packageImage">
-                                                    <img src={`${webURL}/static/images/admin/content/${post.image}`} />
+                                                    <img src={`${storageAPI}/${post.image}`} alt={post.title} />
                                                 </div>
                                                 <h2><strong>{post.title}</strong></h2>
                                                 <h4 style={{ fontSize: 13, color: '#827f7f', fontWeight: 'lighter' }}>
@@ -99,11 +100,11 @@ export default class Store extends PureComponent {
                         <div className="containerService">
                             {
                                 findToursThailand.map((tours) => (
-                                    <Col className="tourThailand" md={{ span: 6 }}>
+                                    <Col key={tours._id} className="tourThailand" md={{ span: 6 }}>
                                         <Card>
                                             <div className="cover">
                                                 <div className="packageImage">
-                                                    <img src={`${webURL}/static/images/admin/content/${tours.image}`} />
+                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title}/>
                                                 </div>
                                                 <h2><strong>{tours.title}</strong></h2>
                                                 <h4 style={{ fontSize: 13, color: '#777373', fontWeight: 'lighter' }}>
@@ -135,11 +136,11 @@ export default class Store extends PureComponent {
                         <div className="containerService">
                             {
                                 findAirTicket.map((tours) => (
-                                    <Col className="tourThailand" md={{ span: 6 }}>
+                                    <Col key={tours._id} className="tourThailand" md={{ span: 6 }}>
                                         <Card>
                                             <div className="cover">
                                                 <div className="tourImage">
-                                                    <img src={`${webURL}/static/images/admin/content/${tours.image}`} />
+                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title}/>
                                                 </div>
                                                 <h2><strong>{tours.title}</strong></h2>
                                                 <div>
@@ -165,11 +166,11 @@ export default class Store extends PureComponent {
                     <div className="containerService">
                         {
                             this.state.service.map((all) => (
-                                <Col className="tourThailand" md={{ span: 6 }}>
+                                <Col key={all._id} className="tourThailand" md={{ span: 6 }}>
                                     <Card>
                                         <div className="cover">
                                             <div className="AllpackageImage">
-                                                <img src={`${webURL}/static/images/admin/content/${all.image}`} />
+                                                <img src={`${storageAPI}/${all.image}`} alt={all.title}/>
                                             </div>
                                             <div>
                                                 <h2><strong>{all.title}</strong></h2>
@@ -199,8 +200,8 @@ export default class Store extends PureComponent {
                         <Carousel autoplay>
                             {
                                 this.state.sliderItem.map((list) => (
-                                    <div>
-                                        <img src={list.image} />
+                                    <div key={list._id}>
+                                        <img src={list.image} alt={list.title}/>
                                     </div>
                                 ))
                             }
@@ -213,9 +214,9 @@ export default class Store extends PureComponent {
                             </h2>
                             {
                                 !this.state.loading && deal.map((deal) => (
-                                    <div className="dealImage">
+                                    <div key={deal._id} className="dealImage">
                                         <div className="hotCover">
-                                            <img src={`${webURL}/static/images/admin/content/${deal.image}`} />
+                                            <img src={`${storageAPI}/${deal.image}`} alt={deal.title}/>
                                         </div>
                                         <div className="hotDetail">
                                             <h3>{deal.title}</h3>
@@ -347,7 +348,7 @@ export default class Store extends PureComponent {
                         height: 100%;
                         background-color: transparent;
                         border-radius: 4px;
-                        object-fit: contain;
+                        object-fit: cover;
                     }
                     .hotDetail h3 {
                         position: relative;
@@ -378,7 +379,7 @@ export default class Store extends PureComponent {
                     .tourImage img {
                         width: 100%;
                         height: 100%;
-                        object-fit:contain;
+                        object-fit:cover;
                         overflow: hidden;
                     }
                     .AllpackageImage img {

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Row, Col, Card, Icon } from 'antd'
 import axios from 'axios'
-const adminAPI = 'http://localhost:80';
+const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
+const api = 'http://167.71.218.37';
 export default class Promo extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -11,7 +12,7 @@ export default class Promo extends React.PureComponent {
         }
     }
     componentDidMount() {
-        axios.get('http://localhost/blog').then((res) => {
+        axios.get(`${api}/blog`).then((res) => {
             if (res.data === null) {
                 this.setState({
                     blog: []
@@ -39,7 +40,7 @@ export default class Promo extends React.PureComponent {
                                 <div className="thumbnail">
                                     <Card>
                                         <div className="cover">
-                                            <img src={`${adminAPI}/static/images/admin/content/${item.image}`} alt={item.image} />
+                                            <img src={`${storageAPI}/${item.image}`} alt={item.image} />
                                         </div>
                                         <h3><strong>{item.title}</strong></h3>
                                         <h5 className="date">Date : {item.date}</h5>
@@ -63,7 +64,7 @@ export default class Promo extends React.PureComponent {
                         width: 100%;
                         height: 100%;
                         overflow:hidden;
-                        object-fit:contain;
+                        object-fit:cover;
                     }
                     .thumbnail {
                         margin-right: 20px;

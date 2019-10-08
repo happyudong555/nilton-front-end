@@ -15,7 +15,7 @@ const Navbar = (props) => {
             <Layout>
                 <Header className="custom-header">
                     <div className="logo">
-                        <Link href={'/'}><a><img src={`/static/logo/logo-nilton.png`} /></a></Link>
+                        <Link href={'/'}><a><img src={`https://nilton.sgp1.digitaloceanspaces.com/static/logo/logo-nilton.png`} /></a></Link>
                     </div>
                     <div className="desktopOnly">
                         <Menu
