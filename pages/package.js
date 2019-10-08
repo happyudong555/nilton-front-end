@@ -61,6 +61,13 @@ export default class Store extends PureComponent {
             else {
                 return (
                     <div>
+                        <Head>
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                            <meta property="og:description" content="ตัวแทนจำหน่ายขาย ตั๋วเครื่องบินราคาถูก ราคาเที่ยวบินภายในประเทศ และ ระหว่างประเทศ" />
+                            <meta name="keywords" content="จอง ตั๋ว เครื่องบิน ราคาพิเศษ บินทั่วโลกกับตั๋วเครื่องบินราคาถูก โปรโมชั่นตั๋วเครื่องบินราคาพิเศษ จองตั๋วราคาถูก" />
+                            <script type="text/javascript" async src="https://www.googletagmanager.com/gtag/js?id=UA-149583162-1"></script>
+                            <script type="text/javascript" src="../static/js/googleAnalytic.js"></script>
+                        </Head>
                         <h1><strong style={{ textTransform: 'capitalize' }}><Icon type="flag" style={{ marginRight: 13 }} />sight seeing tours</strong></h1>
                         <div className="containerService">
                             {
@@ -73,7 +80,7 @@ export default class Store extends PureComponent {
                                                 </div>
                                                 <h2><strong>{post.title}</strong></h2>
                                                 <h4 style={{ fontSize: 13, color: '#827f7f', fontWeight: 'lighter' }}>
-                                                    <Link href={{pathname:'detail', query: {id: post._id}}}>{post.content}</Link>
+                                                    <Link href={{ pathname: 'detail', query: { id: post._id } }}>{post.content}</Link>
                                                 </h4>
                                             </div>
                                         </Card>
@@ -104,11 +111,11 @@ export default class Store extends PureComponent {
                                         <Card>
                                             <div className="cover">
                                                 <div className="packageImage">
-                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title}/>
+                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
                                                 </div>
                                                 <h2><strong>{tours.title}</strong></h2>
                                                 <h4 style={{ fontSize: 13, color: '#777373', fontWeight: 'lighter' }}>
-                                                    <Link style={{ color: '#827f7f' }} href={{pathname:'detail', query: {id: tours._id}}}>{tours.content}</Link>
+                                                    <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: tours._id } }}>{tours.content}</Link>
                                                 </h4>
                                             </div>
                                         </Card>
@@ -140,14 +147,14 @@ export default class Store extends PureComponent {
                                         <Card>
                                             <div className="cover">
                                                 <div className="tourImage">
-                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title}/>
+                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
                                                 </div>
                                                 <h2><strong>{tours.title}</strong></h2>
                                                 <div>
                                                     <h3 style={{ fontWeight: 'bold', color: '#2b2766', textTransform: 'capitalize', fontSize: 14 }}>airlines : <span style={{ color: '#635e5e' }}>{tours.airlines}</span></h3>
                                                 </div>
                                                 <h4 style={{ fontSize: 13, color: '#777373', fontWeight: 'lighter' }}>
-                                                    <Link style={{ color: '#827f7f' }} href={{pathname:'detail', query: {id: tours._id}}}>{tours.content}</Link>
+                                                    <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: tours._id } }}>{tours.content}</Link>
                                                 </h4>
                                             </div>
                                         </Card>
@@ -170,12 +177,12 @@ export default class Store extends PureComponent {
                                     <Card>
                                         <div className="cover">
                                             <div className="AllpackageImage">
-                                                <img src={`${storageAPI}/${all.image}`} alt={all.title}/>
+                                                <img src={`${storageAPI}/${all.image}`} alt={all.title} />
                                             </div>
                                             <div>
                                                 <h2><strong>{all.title}</strong></h2>
                                                 <h4 style={{ fontSize: 13, color: '#777373', fontWeight: 'lighter' }}>
-                                                    <Link style={{ color: '#827f7f' }} href={{pathname:'detail', query: {id: all._id}}}>{all.content}</Link>
+                                                    <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: all._id } }}>{all.content}</Link>
                                                 </h4>
                                             </div>
                                         </div>
@@ -201,7 +208,7 @@ export default class Store extends PureComponent {
                             {
                                 this.state.sliderItem.map((list) => (
                                     <div key={list._id}>
-                                        <img src={list.image} alt={list.title}/>
+                                        <img src={list.image} alt={list.title} />
                                     </div>
                                 ))
                             }
@@ -216,11 +223,11 @@ export default class Store extends PureComponent {
                                 !this.state.loading && deal.map((deal) => (
                                     <div key={deal._id} className="dealImage">
                                         <div className="hotCover">
-                                            <img src={`${storageAPI}/${deal.image}`} alt={deal.title}/>
+                                            <img src={`${storageAPI}/${deal.image}`} alt={deal.title} />
                                         </div>
                                         <div className="hotDetail">
                                             <h3>{deal.title}</h3>
-                                            <p><Link style={{ color: '#827f7f' }} href={{pathname:'detail', query: {id: deal._id}}}>{deal.content}</Link></p>
+                                            <p><Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: deal._id } }}>{deal.content}</Link></p>
                                             <h5 className="dateDeal">{deal.date}</h5>
                                         </div>
                                     </div>

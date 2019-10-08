@@ -42,7 +42,6 @@ const Index = ({ url: { query: { id } } }) => {
     }
     // sharing to facebook
     const webTitle = Object.values(detail).map(item => item.title);
-    const description = Object.values(detail).map(item => item.content);
     const image = Object.values(detail).map(item => item.image);
     const appId = '133758567104408';
     const URL = `${webURL}/detail?id=${id}`
@@ -55,11 +54,15 @@ const Index = ({ url: { query: { id } } }) => {
                 <title>{webTitle}</title>
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.0.0-alpha.3/antd.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit&display=swap" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta property="og:url" content={URL} />
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content={webTitle} />
-                <meta property="og:description" content={description} />
+                <meta property="og:description" content="จองโรงแรม รีสอร์ท ที่พัก รับประกันราคาดีที่สุด จองง่ายและรวดเร็ว ราคาพิเศษ" />
                 <meta property="og:image" content={`${storageAPI}/${image}`} />
+                <meta name="keywords" content="จอง ตั๋ว เครื่องบิน ราคาพิเศษ บินทั่วโลกกับตั๋วเครื่องบินราคาถูก โปรโมชั่นตั๋วเครื่องบินราคาพิเศษ จองตั๋วราคาถูก" />
+                <script type="text/javascript" async src="https://www.googletagmanager.com/gtag/js?id=UA-149583162-1"></script>
+                <script type="text/javascript" src="../static/js/googleAnalytic.js"></script>
             </Head>
             <div>
                 <div className="clearfix">

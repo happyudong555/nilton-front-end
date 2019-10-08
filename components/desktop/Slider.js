@@ -12,6 +12,9 @@ export default class Slider extends React.PureComponent {
     render() {
         return (
             <React.Fragment>
+                <Head>
+                    <meta property="og:image" content={`${this.state.slide}`} />
+                </Head>
                 <Row>
                     <Col style={{backgroundImage:`url(${this.state.slide})`}} md={{ span: 12 }} className="box">
                     </Col>
