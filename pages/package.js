@@ -3,35 +3,19 @@ import axios from 'axios'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Icon, Col, Carousel, Card } from 'antd'
+import { Icon, Col, Input, Card } from 'antd'
 const Navbar = dynamic(import('../components/desktop/navbar'), { ssr: false });
 const Footer = dynamic(import('../components/desktop/footer'), { ssr: false });
 const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
-const webURL = 'http://167.71.218.37';
+const webURL = 'https://admin.niltontravel.com';
+const {Search} = Input;
 export default class Store extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             loading: false,
             service: [],
-            sliderItem: [
-                {
-                    "id": 1,
-                    "image": "/static/images/slider_images/1.jpg"
-                },
-                {
-                    "id": 2,
-                    "image": "/static/images/slider_images/2.jpg"
-                },
-                {
-                    "id": 3,
-                    "image": "/static/images/slider_images/3.jpg"
-                },
-                {
-                    "id": 4,
-                    "image": "/static/images/slider_images/4.jpg"
-                }
-            ]
+            search: ''
         }
     }
     componentDidMount() {
@@ -48,9 +32,15 @@ export default class Store extends PureComponent {
             }
         })
     }
+    searchBox = (e) => {
+        this.setState({
+            search: e.target.value
+        })
+    }
     render() {
         const sightSeeing = () => {
             const findSight = this.state.service.map(item => item).filter(type => type.service === "sight seeing tours");
+            const findSeeing = findSight.filter((item) => item.title.indexOf(this.state.search) !== -1);
             if (findSight.length === 0) {
                 return (
                     <div className="clearfix">
@@ -71,7 +61,7 @@ export default class Store extends PureComponent {
                         <h1><strong style={{ textTransform: 'capitalize' }}><Icon type="flag" style={{ marginRight: 13 }} />sight seeing tours</strong></h1>
                         <div className="containerService">
                             {
-                                findSight.map((post) => (
+                                findSeeing.map((post) => (
                                     <Col key={post._id} className="toursService" md={{ span: 6 }}>
                                         <Card>
                                             <div className="cover">
@@ -79,7 +69,7 @@ export default class Store extends PureComponent {
                                                     <img src={`${storageAPI}/${post.image}`} alt={post.title} />
                                                 </div>
                                                 <h2><strong>{post.title}</strong></h2>
-                                                <h4 style={{ fontSize: 13, color: '#827f7f', fontWeight: 'lighter' }}>
+                                                <h4 style={{ fontSize: '1.2rem', color: '#827f7f', fontWeight: 'lighter' }}>
                                                     <Link href={{ pathname: 'detail', query: { id: post._id } }}>{post.content}</Link>
                                                 </h4>
                                             </div>
@@ -93,6 +83,7 @@ export default class Store extends PureComponent {
             }
         }
         const findToursThailand = this.state.service.map(item => item).filter(type => type.service === "package tours thailand")
+        const findInThailand = findToursThailand.filter((item) => item.title.indexOf(this.state.search) !== -1);
         const packageToursThai = () => {
             if (findToursThailand.length === 0) {
                 return (
@@ -106,7 +97,7 @@ export default class Store extends PureComponent {
                         <h1><strong style={{ textTransform: 'capitalize' }}><div className="thai_icon" style={{ marginRight: 13 }}></div>Tours Thailand</strong></h1>
                         <div className="containerService">
                             {
-                                findToursThailand.map((tours) => (
+                                findInThailand.map((tours) => (
                                     <Col key={tours._id} className="tourThailand" md={{ span: 6 }}>
                                         <Card>
                                             <div className="cover">
@@ -114,7 +105,7 @@ export default class Store extends PureComponent {
                                                     <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
                                                 </div>
                                                 <h2><strong>{tours.title}</strong></h2>
-                                                <h4 style={{ fontSize: 13, color: '#777373', fontWeight: 'lighter' }}>
+                                                <h4 style={{ fontSize: '1.2rem', color: '#777373', fontWeight: 'lighter' }}>
                                                     <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: tours._id } }}>{tours.content}</Link>
                                                 </h4>
                                             </div>
@@ -127,7 +118,9 @@ export default class Store extends PureComponent {
                 )
             }
         }
+        
         const findAirTicket = this.state.service.map(item => item).filter(type => type.service === "air tickets")
+        const findTickets = findAirTicket.filter((item) => item.title.indexOf(this.state.search) !== -1);
         const airTickets = () => {
             if (findAirTicket.length === 0) {
                 return (
@@ -142,7 +135,7 @@ export default class Store extends PureComponent {
                         <h1><strong style={{ textTransform: 'capitalize' }}><div className="tavelIcon" style={{ marginRight: 13 }}></div>Air Tickets</strong></h1>
                         <div className="containerService">
                             {
-                                findAirTicket.map((tours) => (
+                                findTickets.map((tours) => (
                                     <Col key={tours._id} className="tourThailand" md={{ span: 6 }}>
                                         <Card>
                                             <div className="cover">
@@ -153,7 +146,7 @@ export default class Store extends PureComponent {
                                                 <div>
                                                     <h3 style={{ fontWeight: 'bold', color: '#2b2766', textTransform: 'capitalize', fontSize: 14 }}>airlines : <span style={{ color: '#635e5e' }}>{tours.airlines}</span></h3>
                                                 </div>
-                                                <h4 style={{ fontSize: 13, color: '#777373', fontWeight: 'lighter' }}>
+                                                <h4 style={{ fontSize: '1.2rem', color: '#777373', fontWeight: 'lighter' }}>
                                                     <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: tours._id } }}>{tours.content}</Link>
                                                 </h4>
                                             </div>
@@ -166,13 +159,14 @@ export default class Store extends PureComponent {
                 )
             }
         }
+        const find_Blog = this.state.service.filter((item) => item.title.indexOf(this.state.search) !== -1);
         const allItem = () => {
             return (
                 <div style={{ paddingTop: 25 }} className="clearfix">
                     <h1><strong style={{ textTransform: 'capitalize' }}><Icon type="tags" /> All Deal</strong></h1>
                     <div className="containerService">
                         {
-                            this.state.service.map((all) => (
+                            find_Blog.map((all) => (
                                 <Col key={all._id} className="tourThailand" md={{ span: 6 }}>
                                     <Card>
                                         <div className="cover">
@@ -181,7 +175,7 @@ export default class Store extends PureComponent {
                                             </div>
                                             <div>
                                                 <h2><strong>{all.title}</strong></h2>
-                                                <h4 style={{ fontSize: 13, color: '#777373', fontWeight: 'lighter' }}>
+                                                <h4 style={{ fontSize: '1.2rem', color: '#777373', fontWeight: 'lighter' }}>
                                                     <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: all._id } }}>{all.content}</Link>
                                                 </h4>
                                             </div>
@@ -194,47 +188,25 @@ export default class Store extends PureComponent {
                 </div>
             )
         }
-        const deal = Object.values(this.state.service).slice(0, 4);
         return (
             <React.Fragment>
                 <Head>
                     <title>Nilton Travel center</title>
                     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.0.0-alpha.3/antd.min.css" />
+                    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet"/>
                 </Head>
                 <Navbar />
-                <div className="storeContainer">
-                    <Col className="CarouselContainer" md={{ span: 12 }}>
-                        <Carousel autoplay>
-                            {
-                                this.state.sliderItem.map((list) => (
-                                    <div key={list._id}>
-                                        <img src={list.image} alt={list.title} />
-                                    </div>
-                                ))
-                            }
-                        </Carousel>
-                    </Col>
-                    <Col className="hot_dealContainer" md={{ span: 12 }}>
-                        <div className="listDeal">
-                            <h2 className="dealTitle">
-                                <Icon style={{ fontSize: 30 }} type="fire" /> Promotion
-                            </h2>
-                            {
-                                !this.state.loading && deal.map((deal) => (
-                                    <div key={deal._id} className="dealImage">
-                                        <div className="hotCover">
-                                            <img src={`${storageAPI}/${deal.image}`} alt={deal.title} />
-                                        </div>
-                                        <div className="hotDetail">
-                                            <h3>{deal.title}</h3>
-                                            <p><Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: deal._id } }}>{deal.content}</Link></p>
-                                            <h5 className="dateDeal">{deal.date}</h5>
-                                        </div>
-                                    </div>
-                                ))
-                            }
+                <Col className="headerContainer">
+                    <div>
+                        <div style={{textAlign:'center'}}>
+                            <h1 className="headTitle"><strong>Welcome to Nilton travel store</strong></h1>
+                            <br />
+                            <Search className="searchPackage" size="large" onChange={this.searchBox.bind(this)} type="text" placeholder="Find package..." />
+                            
                         </div>
-                    </Col>
+                    </div>
+                </Col>
+                <div className="storeContainer">
                     <div className="clearfix">
                         {
                             sightSeeing()
@@ -254,6 +226,26 @@ export default class Store extends PureComponent {
                 <style>{`
                     .clearfix {
                         clear:both;
+                    }
+                    .headTitle {
+                        font-size:2.1rem;
+                        font-family: 'Noto Serif', serif !important;
+                        text-transform: uppercase;
+                        color: #fff;
+                        font-weight: bold;
+                    }
+                    .headerContainer {
+                        width: 100%;
+                        height: 266px;
+                        background-image: url(https://nilton.sgp1.digitaloceanspaces.com/asset/bg.jpg);
+                        padding: 50px;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                    }
+                    .searchPackage {
+                        width: 50%;
+                        display: block;
+                        margin: auto;
                     }
                     .thai_icon {
                         width: 28px;
@@ -307,22 +299,6 @@ export default class Store extends PureComponent {
                     }
                     .containerService .ant-card-bordered{
                         border: 0;
-                    }
-                    .CarouselContainer {
-                        margin-bottom:30px;
-                    }
-                    .ant-carousel .slick-slide img {
-                        width: 100%;
-                    }
-                    .ant-carousel .slick-slide {
-                        text-align: center;
-                        height: 340px;
-                        background: transparent;
-                        overflow: hidden;
-                      }
-                      
-                    .ant-carousel .slick-slide h3 {
-                        color: #fff;
                     }
                     .hot_dealContainer {
                         background-color: #fff;
@@ -391,13 +367,24 @@ export default class Store extends PureComponent {
                     }
                     .AllpackageImage img {
                         width: 100%;
-                        height: auto;
+                        height: 100%;
                         overflow: hidden;
                         object-fit: contain;
                         border-radius: 3px;
                     }
                     a {
                         color: #827f7f !important;
+                    }
+                    @media screen and (min-width:320px) and (max-width: 420px) {
+                        .headerContainer {
+                            height: 200px;
+                        }
+                        .headTitle {
+                            font-size: 16.3px;
+                        }
+                        .searchPackage {
+                            width: 100%;
+                        }
                     }
                 `}
                 </style>

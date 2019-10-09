@@ -3,7 +3,7 @@ import { Row, Col, Card, Icon } from 'antd'
 import Link from 'next/link'
 import axios from 'axios'
 const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
-const api = 'http://167.71.218.37';
+const api = 'https://admin.niltontravel.com';
 export default class RelatedPost extends PureComponent {
     constructor(props) {
         super(props)

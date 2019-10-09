@@ -1,8 +1,9 @@
 import React from 'react'
 import { Row, Col, Card, Icon } from 'antd'
 import axios from 'axios'
+import Link from 'next/link'
 const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
-const api = 'http://167.71.218.37';
+const api = 'https://admin.niltontravel.com';
 export default class Promo extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -44,10 +45,10 @@ export default class Promo extends React.PureComponent {
                                         </div>
                                         <h3><strong>{item.title}</strong></h3>
                                         <h5 className="date">Date : {item.date}</h5>
-                                        <p>
-                                            {item.content}
+                                        <p style={{fontSize:'1.2rem'}}>
+                                            <Link style={{ color: '#827f7f !important' }} href={{ pathname: 'detail', query: { id: item._id } }}>{item.content}</Link>
                                         </p>
-                                        <h5 className="author">POST BY : {item.author}</h5>
+                                        <h5 className="author">Service Type : {item.service}</h5>
                                     </Card>
                                 </div>
                             </Col>
@@ -98,7 +99,11 @@ export default class Promo extends React.PureComponent {
                         height: 90px;
                         overflow: hidden;
                     }
+                    .thumbnail a {
+                        color: #827f7f !important;
+                    }
                     .author {
+                        font-size: 13px;
                         font-weight: bold;
                         color: #000 !important;
                         margin-bottom: 20px;

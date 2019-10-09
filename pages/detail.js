@@ -8,7 +8,7 @@ const Navbar = dynamic(import('../components/desktop/navbar'), { ssr: false });
 const RelatedPost = dynamic(import('../components/desktop/relatedPost'), { ssr: false });
 const Footer = dynamic(import('../components/desktop/footer'), { ssr: false })
 const webURL = 'https://niltontravel.com';
-const api = 'http://167.71.218.37';
+const api = 'https://admin.niltontravel.com';
 const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
 const Index = ({ url: { query: { id } } }) => {
     const [loading, setLoad] = useState(false);
