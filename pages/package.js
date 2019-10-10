@@ -8,7 +8,7 @@ const Navbar = dynamic(import('../components/desktop/navbar'), { ssr: false });
 const Footer = dynamic(import('../components/desktop/footer'), { ssr: false });
 const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
 const webURL = 'https://admin.niltontravel.com';
-const {Search} = Input;
+const { Search } = Input;
 export default class Store extends PureComponent {
     constructor(props) {
         super(props);
@@ -63,17 +63,15 @@ export default class Store extends PureComponent {
                             {
                                 findSeeing.map((post) => (
                                     <Col key={post._id} className="toursService" md={{ span: 6 }}>
+                                        <Link href={{ pathname: 'detail', query: { id: post._id } }}>
                                         <Card>
                                             <div className="cover">
                                                 <div className="packageImage">
                                                     <img src={`${storageAPI}/${post.image}`} alt={post.title} />
                                                 </div>
-                                                <h2><strong>{post.title}</strong></h2>
-                                                <h4 style={{ fontSize: '1.2rem', color: '#827f7f', fontWeight: 'lighter' }}>
-                                                    <Link href={{ pathname: 'detail', query: { id: post._id } }}>{post.content}</Link>
-                                                </h4>
                                             </div>
                                         </Card>
+                                        </Link>
                                     </Col>
                                 ))
                             }
@@ -99,17 +97,15 @@ export default class Store extends PureComponent {
                             {
                                 findInThailand.map((tours) => (
                                     <Col key={tours._id} className="tourThailand" md={{ span: 6 }}>
+                                        <Link href={{ pathname: 'detail', query: { id: tours._id } }}>
                                         <Card>
                                             <div className="cover">
                                                 <div className="packageImage">
                                                     <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
                                                 </div>
-                                                <h2><strong>{tours.title}</strong></h2>
-                                                <h4 style={{ fontSize: '1.2rem', color: '#777373', fontWeight: 'lighter' }}>
-                                                    <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: tours._id } }}>{tours.content}</Link>
-                                                </h4>
                                             </div>
                                         </Card>
+                                        </Link>
                                     </Col>
                                 ))
                             }
@@ -118,7 +114,7 @@ export default class Store extends PureComponent {
                 )
             }
         }
-        
+
         const findAirTicket = this.state.service.map(item => item).filter(type => type.service === "air tickets")
         const findTickets = findAirTicket.filter((item) => item.title.indexOf(this.state.search) !== -1);
         const airTickets = () => {
@@ -137,20 +133,19 @@ export default class Store extends PureComponent {
                             {
                                 findTickets.map((tours) => (
                                     <Col key={tours._id} className="tourThailand" md={{ span: 6 }}>
-                                        <Card>
-                                            <div className="cover">
-                                                <div className="tourImage">
-                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
+                                        <Link href={{ pathname: 'detail', query: { id: tours._id } }}>
+                                            <Card>
+                                                <div className="cover">
+                                                    <div className="tourImage">
+                                                        <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
+                                                    </div>
+                                                    <h2><strong>{tours.title}</strong></h2>
+                                                    <div>
+                                                        <h3 style={{ fontWeight: 'bold', color: '#2b2766', textTransform: 'capitalize', fontSize: 14 }}>airlines : <span style={{ color: '#635e5e' }}>{tours.airlines}</span></h3>
+                                                    </div>
                                                 </div>
-                                                <h2><strong>{tours.title}</strong></h2>
-                                                <div>
-                                                    <h3 style={{ fontWeight: 'bold', color: '#2b2766', textTransform: 'capitalize', fontSize: 14 }}>airlines : <span style={{ color: '#635e5e' }}>{tours.airlines}</span></h3>
-                                                </div>
-                                                <h4 style={{ fontSize: '1.2rem', color: '#777373', fontWeight: 'lighter' }}>
-                                                    <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: tours._id } }}>{tours.content}</Link>
-                                                </h4>
-                                            </div>
-                                        </Card>
+                                            </Card>
+                                        </Link>
                                     </Col>
                                 ))
                             }
@@ -168,19 +163,15 @@ export default class Store extends PureComponent {
                         {
                             find_Blog.map((all) => (
                                 <Col key={all._id} className="tourThailand" md={{ span: 6 }}>
-                                    <Card>
-                                        <div className="cover">
-                                            <div className="AllpackageImage">
-                                                <img src={`${storageAPI}/${all.image}`} alt={all.title} />
+                                    <Link href={{ pathname: 'detail', query: { id: all._id } }}>
+                                        <Card>
+                                            <div className="cover">
+                                                <div className="AllpackageImage">
+                                                    <img src={`${storageAPI}/${all.image}`} alt={all.title} />
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h2><strong>{all.title}</strong></h2>
-                                                <h4 style={{ fontSize: '1.2rem', color: '#777373', fontWeight: 'lighter' }}>
-                                                    <Link style={{ color: '#827f7f' }} href={{ pathname: 'detail', query: { id: all._id } }}>{all.content}</Link>
-                                                </h4>
-                                            </div>
-                                        </div>
-                                    </Card>
+                                        </Card>
+                                    </Link>
                                 </Col>
                             ))
                         }
@@ -193,16 +184,15 @@ export default class Store extends PureComponent {
                 <Head>
                     <title>Nilton Travel center</title>
                     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.0.0-alpha.3/antd.min.css" />
-                    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,700&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet" />
                 </Head>
                 <Navbar />
                 <Col className="headerContainer">
                     <div>
-                        <div style={{textAlign:'center'}}>
+                        <div style={{ textAlign: 'center' }}>
                             <h1 className="headTitle"><strong>Welcome to Nilton travel store</strong></h1>
                             <br />
                             <Search className="searchPackage" size="large" onChange={this.searchBox.bind(this)} type="text" placeholder="Find package..." />
-                            
                         </div>
                     </div>
                 </Col>
@@ -268,7 +258,7 @@ export default class Store extends PureComponent {
                     }
                     .packageImage, .AllpackageImage {
                         width: 100%;
-                        height: 200px;
+                        height: 370px;
                         overflow:hidden;
                     }
                     .packageImage img {

@@ -37,20 +37,16 @@ export default class Promo extends React.PureComponent {
                 <Row gutter={16}>
                     {
                         loading && blog.map((item) => (
-                            <Col key={item.id} md={{ span: 6 }}>
+                            <Col style={{cursor:'pointer'}} key={item.id} md={{ span: 6 }}>
+                                <Link href={{ pathname: 'detail', query: { id: item._id } }}>
                                 <div className="thumbnail">
                                     <Card>
                                         <div className="cover">
                                             <img src={`${storageAPI}/${item.image}`} alt={item.image} />
                                         </div>
-                                        <h3><strong>{item.title}</strong></h3>
-                                        <h5 className="date">Date : {item.date}</h5>
-                                        <p style={{fontSize:'1.2rem'}}>
-                                            <Link style={{ color: '#827f7f !important' }} href={{ pathname: 'detail', query: { id: item._id } }}>{item.content}</Link>
-                                        </p>
-                                        <h5 className="author">Service Type : {item.service}</h5>
                                     </Card>
                                 </div>
+                                </Link>
                             </Col>
                         ))
                     }
@@ -58,7 +54,7 @@ export default class Promo extends React.PureComponent {
                 <style>{`
                     .cover {
                         width: 100%;
-                        height: 200px;
+                        height: 370px;
                         overflow:hidden;
                     }
                     .cover img {

@@ -4,8 +4,8 @@ const express = require('express')
 const dev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 80;
 const cors = require('cors');
-//const app = next({ dev });
-const app = next({ dir: '.' , dev: false, staticMarkup: false, quiet: false, conf: null, chunk:null, cache: true});
+const app = next({ dev });
+//const app = next({ dir: '.' , dev: false, staticMarkup: false, quiet: false, conf: null, chunk:null, cache: true});
 const handle = app.getRequestHandler()
 const compression = require('compression');
 app.prepare().then(() => {
