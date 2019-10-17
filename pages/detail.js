@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { Card, List, Icon, Timeline, Divider } from 'antd'
+import { Card, List, Icon, Timeline, Divider, Modal, Button } from 'antd'
 import { FacebookButton, FacebookCount } from 'react-social'
 const Navbar = dynamic(import('../components/desktop/navbar'), { ssr: false });
 const RelatedPost = dynamic(import('../components/desktop/relatedPost'), { ssr: false });
@@ -13,6 +13,8 @@ const storageAPI = 'https://nilton.sgp1.digitaloceanspaces.com/content';
 const Index = ({ url: { query: { id } } }) => {
     const [loading, setLoad] = useState(false);
     const [detail, setDetail] = useState([]);
+    const [box, setBox] = useState(false);
+    const [modalImage, setModal] = useState(null)
     useEffect(() => {
         axios.get(`${api}/detail/${id}`).then((res) => {
             if (res.data === null) {
@@ -23,6 +25,13 @@ const Index = ({ url: { query: { id } } }) => {
             }
         });
     })
+    const openBox = (image) => {
+        setModal(image)
+        setBox(true)
+    }
+    const closed = () => {
+        setBox(false)
+    }
     const setAlbums = (albums) => {
         if (Object.values(albums).length === 0) {
             <div>
@@ -32,13 +41,23 @@ const Index = ({ url: { query: { id } } }) => {
             return (
                 <div className="albumsContainer">
                     <List dataSource={albums} renderItem={albumsSet => (
-                        <li key={albumsSet._id} className="albumsLayout">
+                        <li onClick={() => openBox(albumsSet)} key={albumsSet._id} className="albumsLayout">
                             <img src={`${storageAPI}/${albumsSet}`} className="albumsImageSet lazyload" alt={albumsSet} />
                         </li>
                     )} />
                 </div>
             )
         }
+    }
+    const boxPreview = () => {
+        return (
+            <div>
+                <Modal visible={box} footer={null} closable={false}>
+                    <img width={`100%`} src={`${storageAPI}/${modalImage}`} />
+                    <Button onClick={closed} style={{ marginTop: 20 }}>Close</Button>
+                </Modal>
+            </div>
+        )
     }
     // sharing to facebook
     const webTitle = Object.values(detail).map(item => item.title);
@@ -71,31 +90,10 @@ const Index = ({ url: { query: { id } } }) => {
                 {
                     !loading && Object.values(detail).map((post) => (
                         <div>
-                            <div md={{ span: 12 }} className="mainContent">
+                            <div className="serviceInfo clearfix">
                                 <Card style={{ padding: 0 }} bordered={false}>
                                     <img className="bg_images" src={`${storageAPI}/${post.image}`} />
                                 </Card>
-                            </div>
-                            <div className="contentContainer clearfix">
-                                <div>
-                                    <h1>{post.title}</h1>
-                                    <p>
-                                        {post.content}
-                                    </p>
-                                </div>
-                                <br />
-                                <br />
-                                <h2><strong>Share content</strong></h2>
-                                <div className="facebookShare" style={{ marginTop: 10 }}>
-                                    <FacebookButton url={URL} appId={appId}>
-                                        <Icon type="facebook" />
-                                    </FacebookButton>
-                                </div>
-                                <br />
-                                <br />
-                                {<RelatedPost />}
-                            </div>
-                            <div className="serviceInfo">
                                 <Divider orientation="left"><h2><strong>Package Info</strong></h2></Divider>
                                 <Timeline>
                                     <Timeline.Item style={{ textTransform: 'capitalize' }}><strong>Airline :</strong> {post.airlines}</Timeline.Item>
@@ -109,6 +107,7 @@ const Index = ({ url: { query: { id } } }) => {
                         </div>
                     ))
                 }
+                {boxPreview()}
                 <div className="clearfix">
                     <Footer />
                 </div>
@@ -183,7 +182,8 @@ const Index = ({ url: { query: { id } } }) => {
                     overflow: hidden;
                     padding-right: 0;
                     padding-top: 0;
-                    padding: 3px;
+                    padding: 6px;
+                    cursor: pointer;
                 }
                 .albumsContainer{
                     width: 100%;
@@ -201,11 +201,15 @@ const Index = ({ url: { query: { id } } }) => {
                     font-size: 40px;
                 }
                 .serviceInfo {
-                    padding:25px;
-                    width: 40%;
+                    padding: 25px;
+                    width: 60%;
                     height: auto;
-                    float:left;
-                    border-left: 2.2px dashed #f1f1f1;
+                    float: none;
+                    margin: auto;
+                    display: block;
+                }
+                .disableInMobile {
+                    display:block;
                 }
                 @media screen and (min-width: 320px) and (max-width: 420px) {
                     .avatar {
@@ -213,6 +217,7 @@ const Index = ({ url: { query: { id } } }) => {
                     }
                     .logo img {
                         height: 45px;
+                        object-fit: contain;
                     }
                     .custom-header {
                         padding: 20px;
@@ -239,6 +244,9 @@ const Index = ({ url: { query: { id } } }) => {
                     .serviceInfo {
                         width: 100%;
                         padding-top: 0;
+                    }
+                    .disableInMobile {
+                        display:none;
                     }
                 }
             `}</style>

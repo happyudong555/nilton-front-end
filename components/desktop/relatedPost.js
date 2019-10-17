@@ -76,6 +76,7 @@ export default class RelatedPost extends PureComponent {
                         width: 100%;
                         height: 100%;
                         object-fit:cover;
+                        cursor: pointer;
                     }
                     .storyName {
                         color: #000 !important;

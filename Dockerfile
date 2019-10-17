@@ -7,7 +7,7 @@ WORKDIR /usr/src/nilton-front-end
 # Install app dependencies
 COPY package.json /usr/src/nilton-front-end
 RUN yarn install
-
+RUN yarn add global pm2 -g
 # Bundle app source
 COPY . .
 RUN yarn build

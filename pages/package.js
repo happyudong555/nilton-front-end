@@ -64,13 +64,13 @@ export default class Store extends PureComponent {
                                 findSeeing.map((post) => (
                                     <Col key={post._id} className="toursService" md={{ span: 6 }}>
                                         <Link href={{ pathname: 'detail', query: { id: post._id } }}>
-                                        <Card>
-                                            <div className="cover">
-                                                <div className="packageImage">
-                                                    <img src={`${storageAPI}/${post.image}`} alt={post.title} />
+                                            <Card>
+                                                <div className="cover">
+                                                    <div className="packageImage">
+                                                        <img src={`${storageAPI}/${post.image}`} alt={post.title} />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Card>
+                                            </Card>
                                         </Link>
                                     </Col>
                                 ))
@@ -98,13 +98,13 @@ export default class Store extends PureComponent {
                                 findInThailand.map((tours) => (
                                     <Col key={tours._id} className="tourThailand" md={{ span: 6 }}>
                                         <Link href={{ pathname: 'detail', query: { id: tours._id } }}>
-                                        <Card>
-                                            <div className="cover">
-                                                <div className="packageImage">
-                                                    <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
+                                            <Card>
+                                                <div className="cover">
+                                                    <div className="packageImage">
+                                                        <img src={`${storageAPI}/${tours.image}`} alt={tours.title} />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Card>
+                                            </Card>
                                         </Link>
                                     </Col>
                                 ))
@@ -158,8 +158,8 @@ export default class Store extends PureComponent {
         const allItem = () => {
             return (
                 <div style={{ paddingTop: 25 }} className="clearfix">
-                    <h1><strong style={{ textTransform: 'capitalize' }}><Icon type="tags" /> All Deal</strong></h1>
                     <div className="containerService">
+                        <h1><strong style={{ textTransform: 'capitalize' }}><span className="airPlaneIcon"></span> Service & Ticket</strong></h1>
                         {
                             find_Blog.map((all) => (
                                 <Col key={all._id} className="tourThailand" md={{ span: 6 }}>
@@ -261,11 +261,12 @@ export default class Store extends PureComponent {
                         height: 370px;
                         overflow:hidden;
                     }
-                    .packageImage img {
+                    .packageImage img, .AllpackageImage img {
                         width: 100%;
                         height: 100%;
                         object-fit:cover;
                         border-radius: 3px;
+                        cursor: pointer;
                     }
                     .cover h2 {
                         padding-top: 13px;
@@ -355,15 +356,18 @@ export default class Store extends PureComponent {
                         object-fit:cover;
                         overflow: hidden;
                     }
-                    .AllpackageImage img {
-                        width: 100%;
-                        height: 100%;
-                        overflow: hidden;
-                        object-fit: contain;
-                        border-radius: 3px;
-                    }
                     a {
                         color: #827f7f !important;
+                    }
+                    .airPlaneIcon {
+                        background-image: url('/static/icon/air-plane.png');
+                        width: 35px;
+                        height: 35px;
+                        float: left;
+                        background-size: contain;
+                        margin-right: 15px;
+                        background-repeat: no-repeat;
+                        overflow: hidden;
                     }
                     @media screen and (min-width:320px) and (max-width: 420px) {
                         .headerContainer {
